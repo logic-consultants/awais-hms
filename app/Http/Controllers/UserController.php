@@ -74,7 +74,13 @@ class UserController extends Controller
         if ($request->hasFile('image')){
            $image = $request->file('image');
            $ImageName = time().'.'.$image->getClientOriginalExtension();
-           Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+           try {
+               Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+           } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+               $image->move(public_path('uploads/images/users/'), $ImageName);
+           } catch (\Exception $e) {
+               $image->move(public_path('uploads/images/users/'), $ImageName);
+           }
         }
 
         if ($request->take_image) {
@@ -91,7 +97,13 @@ class UserController extends Controller
             $file = $folderPath . $ImageName;
             file_put_contents($file, $image_base64);
 
-          Image::make($file)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+          try {
+              Image::make($file)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+          } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+              // GD/Imagick not available; leave the file as written by file_put_contents
+          } catch (\Exception $e) {
+              // Other errors; leave original file in place
+          }
         }
 
        $user = new User();
@@ -186,7 +198,13 @@ class UserController extends Controller
         if ($request->hasFile('image')){
            $image = $request->file('image');
            $ImageName = time().'.'.$image->getClientOriginalExtension();
-           Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+           try {
+               Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/users/') . $ImageName);
+           } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+               $image->move(public_path('uploads/images/users/'), $ImageName);
+           } catch (\Exception $e) {
+               $image->move(public_path('uploads/images/users/'), $ImageName);
+           }
            $user->image = 'users/'.$ImageName;
        }
 	   $user->facebook = $request->facebook =="" ? "#" : $request->facebook;

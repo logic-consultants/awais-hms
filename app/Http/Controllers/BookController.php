@@ -66,7 +66,13 @@ class BookController extends Controller
         if ($request->hasFile('photo')){
            $image = $request->file('photo');
            $ImageName = time().'.'.$image->getClientOriginalExtension();
-           Image::make($image)->resize(160, 160)->save(base_path('public/uploads/images/books/') . $ImageName);
+           try {
+               Image::make($image)->resize(160, 160)->save(base_path('public/uploads/images/books/') . $ImageName);
+           } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+               $image->move(public_path('uploads/images/books/'), $ImageName);
+           } catch (\Exception $e) {
+               $image->move(public_path('uploads/images/books/'), $ImageName);
+           }
            $book->photo = $ImageName;
        }
        $book->save();
@@ -148,7 +154,13 @@ class BookController extends Controller
         if ($request->hasFile('photo')){
            $image = $request->file('photo');
            $ImageName = time().'.'.$image->getClientOriginalExtension();
-           Image::make($image)->resize(160, 160)->save(base_path('public/uploads/images/books/') . $ImageName);
+           try {
+               Image::make($image)->resize(160, 160)->save(base_path('public/uploads/images/books/') . $ImageName);
+           } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+               $image->move(public_path('uploads/images/books/'), $ImageName);
+           } catch (\Exception $e) {
+               $image->move(public_path('uploads/images/books/'), $ImageName);
+           }
            $book->photo = $ImageName;
        }
        $book->save();

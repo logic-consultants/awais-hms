@@ -252,7 +252,15 @@ class StudentController extends Controller
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/students/') . $ImageName);
+             try {
+                 Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/students/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 // GD/Imagick not available; fallback to moving original uploaded file
+                 $image->move(public_path('uploads/images/students/'), $ImageName);
+             } catch (\Exception $e) {
+                 // Other errors (e.g., permissions), fallback to move
+                 $image->move(public_path('uploads/images/students/'), $ImageName);
+             }
         }
         
         if ($request->need_login) {
@@ -437,11 +445,19 @@ class StudentController extends Controller
         if ($student->school_id != schoolId()) {
             return redirect()->back()->with('error','access denied');
         }
-        $imageData = base64_encode(file_get_contents(asset("public/uploads/1556705924_1.png")));
-$imageBase64 = 'data:image/jpeg;base64,' . $imageData;
+        $logoPath = public_path('uploads/1556705924_1.png');
+        if (file_exists($logoPath)) {
+            $data['logo'] = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoPath));
+        } else {
+            $data['logo'] = '';
+        }
 
-        $data['logo'] = $imageBase64;
-        $data['images'] = 'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/'.$student->image)));
+        $studentImagePath = public_path('uploads/images/'.$student->image);
+        if (!empty($student->image) && file_exists($studentImagePath)) {
+            $data['images'] = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($studentImagePath));
+        } else {
+            $data['images'] = '';
+        }
    	// 	dd($student);
 // return view('backend.pdf.students.student-pdf', ['data' => $data,'student' => $student]);
 
@@ -554,7 +570,13 @@ $imageBase64 = 'data:image/jpeg;base64,' . $imageData;
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/students/') . $ImageName);
+             try {
+                 Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/students/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 $image->move(public_path('uploads/images/students/'), $ImageName);
+             } catch (\Exception $e) {
+                 $image->move(public_path('uploads/images/students/'), $ImageName);
+             }
              $user->image = 'students/'.$ImageName;
         }
 		

@@ -43,8 +43,7 @@
 </style>
 <form action="{{ url('/reports/account_balance') }}" method="get" autocomplete="off" target="_blank">
 	<div class="row">			
-        
-<h3 class="text-primary text-center" style="margin-right:150px; font-weight:700;">Financial Report</h3>
+        <h3 class="text-primary text-center" style="margin-right:150px; font-weight:700;">Financial Report</h3>
 				<div class="col-md-5">
 						<div class="form-group">
 							<label class="control-label">{{ _lang('Date From') }}</label>
@@ -141,36 +140,36 @@
 </div>
 @endsection
 <script>
-function getAllRecordsForTable() {
-    $("#preloader").css("display", "block");
-    var url = "{{ url('/reports/account_balance') }}";
-    url += "?date_from=" + $('#date_from').val() + "&date_to=" + $('#date_to').val();
+    function getAllRecordsForTable() {
+        $("#preloader").css("display", "block");
+        var url = "{{ url('/reports/account_balance') }}";
+        url += "?date_from=" + $('#date_from').val() + "&date_to=" + $('#date_to').val();
 
-    $.fn.dataTable.ext.errMode = 'none';
+        $.fn.dataTable.ext.errMode = 'none';
 
-    $('#tblIncomeRecords').DataTable().destroy();
-    $('#tblExpenseRecords').DataTable().destroy();
-    $("#tblIncomeRecords").DataTable({
-        processing: true,
-        serverSide: false,
-        filter: false,
-        orderMulti: false,
-        pageLength: 25,
-        responsive: true,
-        autoWidth: false,
-        initComplete: function () {
-            $("#preloader").css("display", "none");
-        },
-        ajax: {
-            url: url,
-            type: "GET",
-            dataType: "json",
-            dataSrc: "income"
-        },
-        columns: [
-    { data: "c_type", width: '70%' },
-    { data: "current_amount", width: '30%', className: 'text-right' }
-],
+        $('#tblIncomeRecords').DataTable().destroy();
+        $('#tblExpenseRecords').DataTable().destroy();
+        $("#tblIncomeRecords").DataTable({
+            processing: true,
+            serverSide: false,
+            filter: false,
+            orderMulti: false,
+            pageLength: 25,
+            responsive: true,
+            autoWidth: false,
+            initComplete: function () {
+                $("#preloader").css("display", "none");
+            },
+            ajax: {
+                url: url,
+                type: "GET",
+                dataType: "json",
+                dataSrc: "income"
+            },
+            columns: [
+        { data: "c_type", width: '70%' },
+        { data: "current_amount", width: '30%', className: 'text-right' }
+    ],
         order: [[0, "asc"]],
 
 		footerCallback: function (row, data, start, end, display) {
@@ -253,8 +252,7 @@ function printDiv(divName) {
             </div>   
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div style="flex: 1;">
-                                <img src="{{ 'data:image/jpeg;base64,' . base64_encode(file_get_contents(get_logo())) }}" 
-                                    style="height: 50px;" alt="Logo">
+                                
                             </div>
                             <div style="flex: 2; text-align: center;">
                                 <h2 style="margin: 0; font-size: 22px; font-weight: bold;">{{get_school_name()}}</h2>

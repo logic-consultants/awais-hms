@@ -94,7 +94,13 @@ class ParentController extends Controller
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/parents/') . $ImageName);
+             try {
+                 Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/parents/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 $image->move(public_path('uploads/images/parents/'), $ImageName);
+             } catch (\Exception $e) {
+                 $image->move(public_path('uploads/images/parents/'), $ImageName);
+             }
         }
 
         $user = new User();
@@ -216,7 +222,13 @@ class ParentController extends Controller
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/parents/') . $ImageName);
+             try {
+                 Image::make($image)->resize(200, 160)->save(base_path('public/uploads/images/parents/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 $image->move(public_path('uploads/images/parents/'), $ImageName);
+             } catch (\Exception $e) {
+                 $image->move(public_path('uploads/images/parents/'), $ImageName);
+             }
              $user->image = 'parents/'.$ImageName;
         }
         $user->save();

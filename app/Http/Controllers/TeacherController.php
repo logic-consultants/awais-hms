@@ -63,7 +63,13 @@ class TeacherController extends Controller
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/teachers/') . $ImageName);
+             try {
+                 Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/teachers/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 $image->move(public_path('uploads/images/teachers/'), $ImageName);
+             } catch (\Exception $e) {
+                 $image->move(public_path('uploads/images/teachers/'), $ImageName);
+             }
         }
 
         $user = new User();
@@ -179,7 +185,13 @@ class TeacherController extends Controller
         if ($request->hasFile('image')){
              $image = $request->file('image');
              $ImageName = time().'.'.$image->getClientOriginalExtension();
-             Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/teachers/') . $ImageName);
+             try {
+                 Image::make($image)->resize(400, 400)->save(base_path('public/uploads/images/teachers/') . $ImageName);
+             } catch (\Intervention\Image\Exception\NotSupportedException $e) {
+                 $image->move(public_path('uploads/images/teachers/'), $ImageName);
+             } catch (\Exception $e) {
+                 $image->move(public_path('uploads/images/teachers/'), $ImageName);
+             }
              $user->image = 'teachers/'.$ImageName;
         }
         $user->save();

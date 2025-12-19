@@ -1,0 +1,4 @@
+<img src="{{ 'data:image/jpeg;base64,' . base64_encode(file_get_contents(get_logo())) }}" 
+                                    style="height: 50px;" alt="Logo">
+
+financial account balance.blade in views/backend/reports

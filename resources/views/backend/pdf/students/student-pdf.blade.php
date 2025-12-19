@@ -134,7 +134,11 @@
     <?php //dd($data['student']); ?>
     <div class="student_print_div">
         <div class="body-shape1">
-            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/HeaderLine.png')))}}" alt="Header Line">
+            @php
+                $headerPath = public_path('uploads/HeaderLine.png');
+                $headerImage = file_exists($headerPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($headerPath)) : '';
+            @endphp
+            <img src="{{ $headerImage }}" alt="Header Line">
         </div>
 
         <div class="student-image">
@@ -142,7 +146,12 @@
                 <div class="row align-items-center justify-content-end">
                     <div class="col-auto">
                         <div class="header-logo">
-                            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(get_logo()))}}" alt="Invar">
+                            @php
+                                $logoFilename = get_option('logo') ?: '1556705924_1.png';
+                                $logoPath = public_path('uploads/'.$logoFilename);
+                                $logoImg = file_exists($logoPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoPath)) : '';
+                            @endphp
+                            <img src="{{ $logoImg }}" alt="Invar">
                         </div>
                     </div>
                 </div>
@@ -158,7 +167,11 @@
                 <p>Personal Information</p>
             </div>
             <div class="profile">
-                <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/'.$student->image))) }}" alt="Student Image">
+                @php
+                    $studentImgPath = public_path('uploads/images/'.$student->image);
+                    $studentImg = (!empty($student->image) && file_exists($studentImgPath)) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($studentImgPath)) : '';
+                @endphp
+                <img src="{{ $studentImg }}" alt="Student Image">
             </div>
 
             <div style="display: table; width: 100%; font-family: Arial, sans-serif; font-size:15px; padding:5px 25px;">
@@ -251,17 +264,29 @@
         </div>
 
         <div class="body-shape2">
-            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/footerLine.png')))}}" alt="Footer Line">
+            @php
+                $footerPath = public_path('uploads/footerLine.png');
+                $footerImage = file_exists($footerPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($footerPath)) : '';
+            @endphp
+            <img src="{{ $footerImage }}" alt="Footer Line">
         </div>
         <div style="position: fixed; bottom: 0; left: 0; color: #ffffff">
+            @php
+                $phoneIconPath = public_path('uploads/images/phone-icon.jpg');
+                $phoneIcon = file_exists($phoneIconPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($phoneIconPath)) : '';
+            @endphp
             <li><div class="hostel-number" style="padding:5px 50px; display: inline-block;">
-                <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/phone-icon.jpg')))}}"
+                <img src="{{ $phoneIcon }}"
                     style="width:15px; height:15px;display: inline-block;">
                 {{get_option('phone')}}
             </div></li>
             <li>
             <div class="hostel-email" style="padding:5px 50px; display: inline-block;">
-                <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/email.jpg')))}}"
+                @php
+                    $emailIconPath = public_path('uploads/images/email.jpg');
+                    $emailIcon = file_exists($emailIconPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($emailIconPath)) : '';
+                @endphp
+                <img src="{{ $emailIcon }}"
                     style="width:15px; height:15px; display: inline-block;">
                 <a href="{{get_option('email')}}" style="color: #ffffff">Bait-ul-Hareem</a>
             </div></li>
@@ -275,7 +300,11 @@
 
     <div class="student_print_div">
         <div class="body-shape1">
-            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/HeaderLine.png')))}}" alt="Header Line">
+            @php
+                $headerPath = public_path('uploads/HeaderLine.png');
+                $headerImage = file_exists($headerPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($headerPath)) : '';
+            @endphp
+            <img src="{{ $headerImage }}" alt="Header Line">
         </div>
 
         <div class="student-image">
@@ -283,7 +312,12 @@
                 <div class="row align-items-center justify-content-end">
                     <div class="col-auto">
                         <div class="header-logo">
-                            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(get_logo()))}}" alt="Invar">
+                            @php
+                                $logoFilename = get_option('logo') ?: '1556705924_1.png';
+                                $logoPath = public_path('uploads/'.$logoFilename);
+                                $logoImg = file_exists($logoPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($logoPath)) : '';
+                            @endphp
+                            <img src="{{ $logoImg }}" alt="Invar">
                         </div>
                     </div>
                 </div>
@@ -323,17 +357,27 @@
         </div>
 
         <div class="body-shape2">
-            <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/footerLine.png')))}}" alt="Footer Line">
+            @php
+                $footerPath = public_path('uploads/footerLine.png');
+                $footerImage = file_exists($footerPath) ? 'data:image/png;base64,' . base64_encode(file_get_contents($footerPath)) : '';
+            @endphp
+            <img src="{{ $footerImage }}" alt="Footer Line">
         </div>
         <div style="position: fixed; bottom: 0; left: 0; color: #ffffff">
+            @php
+                $phoneIconPath = public_path('uploads/images/phone-icon.jpg');
+                $phoneIcon = file_exists($phoneIconPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($phoneIconPath)) : '';
+                $emailIconPath = public_path('uploads/images/email.jpg');
+                $emailIcon = file_exists($emailIconPath) ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($emailIconPath)) : '';
+            @endphp
             <li><div class="hostel-number" style="padding:5px 50px; display: inline-block;">
-                <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/phone-icon.jpg')))}}"
+                <img src="{{ $phoneIcon }}"
                     style="width:15px; height:15px;display: inline-block;">
                 {{get_option('phone')}}
             </div></li>
             <li>
             <div class="hostel-email" style="padding:5px 50px; display: inline-block;">
-                <img src="{{'data:image/jpeg;base64,' . base64_encode(file_get_contents(asset('uploads/images/email.jpg')))}}"
+                <img src="{{ $emailIcon }}"
                     style="width:15px; height:15px; display: inline-block;">
                 <a href="{{get_option('email')}}" style="color: #ffffff">Bait-ul-Hareem</a>
             </div></li>
