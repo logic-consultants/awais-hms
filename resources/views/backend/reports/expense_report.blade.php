@@ -23,7 +23,7 @@
 					
 					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label">{{ _lang('Date From') }}</label>
+							<label class="control-label">{{ _lang('Date To') }}</label>
 							<div class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 								<input type="text" class="form-control datepicker" name="date2" value="{{ $date2 }}" readOnly="true" required>

@@ -41,7 +41,9 @@
 					<input type="file" class="form-control dropify" name="school_logo" data-default-file="{{ asset('uploads/'.$department->school_logo) }}" data-allowed-file-extensions="png jpg jpeg PNG JPG JPEG">
 				  </div>
 				</div>
-
+				<input type="hidden" name="remove_bank_logo" id="remove_bank_logo" value="0">
+				<input type="hidden" name="remove_school_logo" id="remove_school_logo" value="0">
+				<br>
 				
 				<div class="form-group">
 				  <div class="col-md-12">
@@ -56,4 +58,16 @@
 
 @endsection
 
+@section('js-script')
+<script>
+  $('.dropify').on('dropify.afterClear', function(event, element){
+	  var name = $(element.element).attr('name');
+	  if(name == 'bank_logo'){
+		  $('#remove_bank_logo').val(1);
+	  } else if(name == 'school_logo'){
+		  $('#remove_school_logo').val(1);
+	  }
+  });
+</script>
+@endsection
 

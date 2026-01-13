@@ -131,6 +131,7 @@
     .class-content.active {
         display: block;
     }
+
     .floors-grid-view {
         display: flex;
         flex-wrap: wrap;
@@ -147,64 +148,134 @@
     }
 </style>
 
-<div class="container-fluid">
+<div style="overflow: hidden;">
+    <div class="container-fluid">
 
-    <!-- Top Row: Cards + Pie Chart -->
-    <div class="row g-4 mb-4">
-        <div class="col-lg-6">
-            <div class="row g-4">
-                <!-- Student Capacity -->
-                <div class="col-md-6">
-                    <div class="card dashboard-card p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="dashboard-icon bg-warning text-white me-3">
-                                <i class="ti-user"></i>
-                            </div>
-                            <div class="numbers">
-                                <p>{{ _lang('Student Capacity') }}</p>
-                                <h4>{{ total_student_capacity() }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Occupied Seats -->
-                <div class="col-md-6">
-                    <div class="card dashboard-card p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="dashboard-icon bg-danger text-white me-3">
-                                <i class="ti-user"></i>
-                            </div>
-                            <div class="numbers">
-                                <p>{{ _lang('Occupied Seats') }}</p>
-                                <h4>{{ total_student_occupied() }}</h4>
+        <!-- Top Row: Cards + Pie Chart -->
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="row g-3">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-warning text-white me-3 flex-shrink-0">
+                                    <i class="ti-user"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small" style="line-height: 1.2;">{{ _lang('Student Capacity') }}</p>
+                                    <h4 class="mb-0 fw-bold">{{ total_student_capacity() }}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Vacant Seats -->
-                <div class="col-md-6">
-                    <div class="card dashboard-card p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="dashboard-icon bg-info text-white me-3">
-                                <i class="ti-user"></i>
-                            </div>
-                            <div class="numbers">
-                                <p>{{ _lang('Vacant Seats') }}</p>
-                                <h4>{{ total_student_vacant() }}</h4>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-danger text-white me-3 flex-shrink-0">
+                                    <i class="ti-user"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small" style="line-height: 1.2;">{{ _lang('Occupied Seats') }}</p>
+                                    <h4 class="mb-0 fw-bold">{{ total_student_occupied() }}</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Monthly Payments -->
-                <div class="col-md-6">
-                    <div class="card dashboard-card p-3">
-                        <div class="d-flex align-items-center">
-                            <div class="dashboard-icon bg-primary text-white me-3">
-                                <i class="ti-credit-card"></i>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-info text-white me-3 flex-shrink-0">
+                                    <i class="ti-user"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small" style="line-height: 1.2;">{{ _lang('Vacant Seats') }}</p>
+                                    <h4 class="mb-0 fw-bold">{{ total_student_vacant() }}</h4>
+                                </div>
                             </div>
-                            <div class="numbers">
-                                <p>{{ _lang('Monthly Payments') }}</p>
-                                <h4>{{ $currency . ' ' . $student_payments }}</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-primary text-white me-3 flex-shrink-0">
+                                    <i class="ti-credit-card"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small" style="line-height: 1.2;">{{ _lang('Monthly Payments') }}</p>
+                                    <h4 class="mb-0 fw-bold">{{ $currency . ' ' . $student_payments }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-success text-white me-3 flex-shrink-0">
+                                    <i class="ti-wallet"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small">{{ _lang('Others Income') }}</p>
+                                    <h5 class="mb-0 fw-bold">{{ $currency . ' ' . $monthly_income }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-danger text-white me-3 flex-shrink-0">
+                                    <i class="ti-stats-down"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small">{{ _lang('Monthly Expense') }}</p>
+                                    <h5 class="mb-0 fw-bold">{{ $currency . ' ' . $monthly_expense }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-warning text-white me-3 flex-shrink-0">
+                                    <i class="ti-money"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small">{{ _lang('Cash in Hand') }}</p>
+                                    <h5 class="mb-0 fw-bold">{{ $cash_in_hand }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-primary text-white me-3 flex-shrink-0">
+                                    <i class="ti-credit-card"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small">{{ _lang('Atif Sahb (Bank)') }}</p>
+                                    <h5 class="mb-0 fw-bold">{{ $atif_bank }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="card dashboard-card p-3 h-100">
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <div class="dashboard-icon bg-info text-white me-3 flex-shrink-0">
+                                    <i class="ti-wallet"></i>
+                                </div>
+                                <div class="numbers">
+                                    <p class="mb-0 text-muted small">{{ _lang('Atif Sahb (Cash)') }}</p>
+                                    <h5 class="mb-0 fw-bold">{{ $atif_sahb }}</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,14 +283,15 @@
                 <!-- More Metrics Button -->
                 <div class="col-md-12 text-center">
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: nowrap; margin-bottom: 10px;">
-                        <button type="button" class="btn btn-primary" onclick="showMoreMetrics()" style="white-space: nowrap;">
-                            {{ _lang('View More Metrics') }}
-                        </button>
+                        <!-- <button type="button" class="btn btn-primary" onclick="showMoreMetrics()" style="white-space: nowrap;">
+                                {{ _lang('View More Metrics') }}
+                            </button> -->
 
                         <div style="width: 150px; display: inline-block;">
-                            <select id="class_selector" class="form-control select2" 
-                                onchange="handleDropdownChange(this)" 
-                                style="width: 100%; height: 38px;"> <option value="none">{{ _lang('Hide All Floors') }}</option>
+                            <select id="class_selector" class="form-control select2"
+                                onchange="handleDropdownChange(this)"
+                                style="width: 100%; height: 38px;">
+                                <option value="none">{{ _lang('Hide All Floors') }}</option>
                                 <option value="all" selected>{{ _lang('Show All Rooms') }}</option>
                                 @foreach ($total_class as $class)
                                 <option value="class-{{ $class->id }}">{{ $class->class_name }}</option>
@@ -230,77 +302,77 @@
                 </div>
             </div>
         </div>
-
-        <!-- Pie Chart -->
-        <div class="col-lg-6">
-            <div class="card dashboard-card p-3">
-                <h5 class="text-center mb-3">{{ _lang('Income vs Expense (Total - ') . date('Y') . ')' }}</h5>
-                <canvas id="incomeExpensePie" height="250"></canvas>
-            </div>
-        </div>
     </div>
 
-    <!-- Collapsible Sections -->
-   @if (count($total_class) > 0)
+<!-- Collapsible Sections -->
+    @if (count($total_class) > 0)
     <div class="card mb-4" id="floor-details-card" style="display: none;">
         <div class="card-body">
-            <div id="floors-container"> 
+            <div id="floors-container">
                 @foreach ($total_class as $class)
-                    @if(count($class->class_section) > 0)
-                    <div class="class-content" id="class-{{ $class->id }}">
-                        <div class="floor-card-inner">
-                            <h4 class="mb-3 pb-2 border-bottom text-primary text-center">{{ $class->class_name }}</h4>
-                            @if (count($class->class_section) > 0)
-                            <table class="table table-bordered table-sm mb-0"> 
-                                <thead class="table-light">
-                                    <tr>
-                                        <th class="text-center">{{ _lang('Room') }}</th>
-                                        <th class="text-center">{{ _lang('Cap') }}</th>
-                                        <th class="text-center">{{ _lang('Vac') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($class->class_section as $section)
-                                    @php
-                                    $occupied = section_wise_occupied($section->id);
-                                    $vacant = $section->capacity - $occupied;
-                                    $percentage = $section->capacity > 0 ? ($vacant / $section->capacity) * 100 : 0;
-                                    @endphp
-                                    <tr>
-                                        <td class="text-center">{{ $section->section_name }}</td>
-                                        <td class="text-center">{{ $section->capacity }}</td>
-                                        <td class="text-center 
-                                            @if ($percentage <= 0) bg-danger text-white
-                                            @elseif($percentage < 25) bg-warning text-dark
-                                            @else bg-success text-white @endif">
-                                            {{ $vacant }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- @else
-                            <div class="alert alert-info p-2 text-center">{{ _lang('No rooms.') }}</div>
-                            @endif -->
-                        </div>
+                @if(count($class->class_section) > 0)
+                <div class="class-content" id="class-{{ $class->id }}">
+                    <div class="floor-card-inner">
+                        <h4 class="mb-3 pb-2 border-bottom text-primary text-center">{{ $class->class_name }}</h4>
+                        @if (count($class->class_section) > 0)
+                        <table class="table table-bordered table-sm mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-center">{{ _lang('Room') }}</th>
+                                    <th class="text-center">{{ _lang('Cap') }}</th>
+                                    <th class="text-center">{{ _lang('Vac') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($class->class_section as $section)
+                                @php
+                                $occupied = section_wise_occupied($section->id);
+                                $vacant = $section->capacity - $occupied;
+                                $percentage = $section->capacity > 0 ? ($vacant / $section->capacity) * 100 : 0;
+                                @endphp
+                                <tr>
+                                    <td class="text-center">{{ $section->section_name }}</td>
+                                    <td class="text-center">{{ $section->capacity }}</td>
+                                    <td class="text-center 
+                                                @if ($percentage <= 0) bg-danger text-white
+                                                @elseif($percentage < 25) bg-warning text-dark
+                                                @else bg-success text-white @endif">
+                                        {{ $vacant }}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <!-- @else
+                                <div class="alert alert-info p-2 text-center">{{ _lang('No rooms.') }}</div>
+                                @endif -->
                     </div>
-                    @endif
+                </div>
+                @endif
                 @endforeach
             </div>
         </div>
     </div>
     @endif
 
-    <!-- Bar Chart for Student Status -->
+<!--  Charts -->
+    <div class="row g-4 mt-3">
 
-    <div class="row g-4 mb-4">
-            <div class="col-lg-12">
-                <div class="card dashboard-card p-3" style="height:500px;">
-                    <h5 class="text-center mb-3">{{ _lang('Student Status by Month and Year') }}</h5>
-                    <canvas id="studentStatusBar" height="300"></canvas>
-                </div>
+        <div class="col-lg-6 col-12">
+            <div class="card dashboard-card p-3 h-100">
+                <h5 class="text-center mb-3">{{ _lang('Income vs Expense (Total - ') . date('Y') . ')' }}</h5>
+                <canvas id="incomeExpensePie" height="250"></canvas>
             </div>
         </div>
+
+        <div class="col-lg-6 col-12">
+            <div class="card dashboard-card p-3" style="height: 500px;">
+                <h5 class="text-center mb-3">{{ _lang('Student Status by Month and Year') }}</h5>
+                <canvas id="studentStatusBar" height="300"></canvas>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 @endsection
@@ -311,28 +383,29 @@
 <script>
     // 1. GLOBAL FUNCTIONS (Must be outside DOMContentLoaded to work with onclick/onchange)
 
-    function showMoreMetrics() {
-        Swal.fire({
-            title: '{{ _lang('Additional Metrics') }}',
-            html: `
-            <div class="row g-3">
-                <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-success text-white me-2"><i class="ti-wallet"></i></div><div class="modal-numbers"><p>{{ _lang('Others Income') }}</p><h5>{{ $currency . ' ' . $monthly_income }}</h5></div></div></div></div>
-                <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-danger text-white me-2"><i class="ti-stats-down"></i></div><div class="modal-numbers"><p>{{ _lang('Monthly Expense') }}</p><h5>{{ $currency . ' ' . $monthly_expense }}</h5></div></div></div></div>
-                <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-warning text-white me-2"><i class="ti-money"></i></div><div class="modal-numbers"><p>{{ _lang('Cash in Hand') }}</p><h5>{{ $cash_in_hand }}</h5></div></div></div></div>
-                <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-primary text-white me-2"><i class="ti-bank"></i></div><div class="modal-numbers"><p>{{ _lang('Atif Sahb (Bank)') }}</p><h5>{{ $atif_bank }}</h5></div></div></div></div>
-                <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-info text-white me-2"><i class="ti-wallet"></i></div><div class="modal-numbers"><p>{{ _lang('Atif Sahb (Cash)') }}</p><h5>{{ $atif_sahb }}</h5></div></div></div></div>
-            </div>`,
-            width: '800px',
-            showCancelButton: false,
-            showConfirmButton: false,
-            allowOutsideClick: true,
-            allowEscapeKey: true,
-            customClass: {
-                container: 'swal2-container',
-                popup: 'swal2-popup'
-            }
-        });
-    }
+    // function showMoreMetrics() {
+    //     Swal.fire({
+    //         title: '{{ _lang('
+    //         Additional Metrics ') }}',
+    //         html: `
+    //         <div class="row g-3">
+    //             <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-success text-white me-2"><i class="ti-wallet"></i></div><div class="modal-numbers"><p>{{ _lang('Others Income') }}</p><h5>{{ $currency . ' ' . $monthly_income }}</h5></div></div></div></div>
+    //             <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-danger text-white me-2"><i class="ti-stats-down"></i></div><div class="modal-numbers"><p>{{ _lang('Monthly Expense') }}</p><h5>{{ $currency . ' ' . $monthly_expense }}</h5></div></div></div></div>
+    //             <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-warning text-white me-2"><i class="ti-money"></i></div><div class="modal-numbers"><p>{{ _lang('Cash in Hand') }}</p><h5>{{ $cash_in_hand }}</h5></div></div></div></div>
+    //             <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-primary text-white me-2"><i class="ti-bank"></i></div><div class="modal-numbers"><p>{{ _lang('Atif Sahb (Bank)') }}</p><h5>{{ $atif_bank }}</h5></div></div></div></div>
+    //             <div class="col-md-6"><div class="card modal-card p-3"><div class="d-flex align-items-center"><div class="modal-icon bg-info text-white me-2"><i class="ti-wallet"></i></div><div class="modal-numbers"><p>{{ _lang('Atif Sahb (Cash)') }}</p><h5>{{ $atif_sahb }}</h5></div></div></div></div>
+    //         </div>`,
+    //         width: '800px',
+    //         showCancelButton: false,
+    //         showConfirmButton: false,
+    //         allowOutsideClick: true,
+    //         allowEscapeKey: true,
+    //         customClass: {
+    //             container: 'swal2-container',
+    //             popup: 'swal2-popup'
+    //         }
+    //     });
+    // }
 
     function handleDropdownChange(selectElement) {
         // show all by default
@@ -435,7 +508,9 @@
                         responsive: true,
                         aspectRatio: 2,
                         plugins: {
-                            legend: { position: 'top' },
+                            legend: {
+                                position: 'top'
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -484,7 +559,9 @@
                     });
 
                     const labels = flattenedData.map(item => {
-                        const monthName = new Date(0, item.month - 1).toLocaleString('default', { month: 'short' });
+                        const monthName = new Date(0, item.month - 1).toLocaleString('default', {
+                            month: 'short'
+                        });
                         return `${monthName} ${item.year}`;
                     });
 
@@ -517,16 +594,32 @@
                             scales: {
                                 y: {
                                     beginAtZero: true,
-                                    title: { display: true, text: '{{ _lang("Number of Students") }}' }
+                                    title: {
+                                        display: true,
+                                        text: '{{ _lang("Number of Students") }}'
+                                    }
                                 },
                                 x: {
-                                    title: { display: true, text: '{{ _lang("Month and Year") }}' },
-                                    ticks: { autoSkip: false, maxRotation: 45, minRotation: 45 }
+                                    title: {
+                                        display: true,
+                                        text: '{{ _lang("Month and Year") }}'
+                                    },
+                                    ticks: {
+                                        autoSkip: false,
+                                        maxRotation: 45,
+                                        minRotation: 45
+                                    }
                                 }
                             },
                             plugins: {
-                                legend: { display: true, position: 'top' },
-                                title: { display: true, text: '{{ _lang("Student Status by Month and Year") }}' }
+                                legend: {
+                                    display: true,
+                                    position: 'top'
+                                },
+                                title: {
+                                    display: true,
+                                    text: '{{ _lang("Student Status by Month and Year") }}'
+                                }
                             }
                         }
                     });

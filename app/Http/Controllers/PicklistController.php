@@ -16,7 +16,7 @@ class PicklistController extends Controller
      */
     public function index()
     {
-		$type = "";
+		$type = "all";
         $picklists = Picklist::where('school_id',schoolId())->orderBy("id",'desc')->get();
         return view('backend.administration.picklist.list',compact('picklists','type'));
     }

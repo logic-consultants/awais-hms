@@ -10,7 +10,7 @@
 			</div>
 			<div class="panel-body">
 			  <div class="col-md-8">
-				<form action="{{route('teachers.store')}}" method="post" autocomplete="off" class="form-horizontal validate">
+				<form action="{{route('teachers.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" class="form-horizontal validate">
 					@csrf
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{_lang('Name')}}</label>

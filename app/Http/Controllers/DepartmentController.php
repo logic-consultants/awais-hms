@@ -159,8 +159,6 @@ class DepartmentController extends Controller
 							->withInput();
 			}			
 		}
-	
-        	
 		
         $department = Department::find($id);
         
@@ -168,20 +166,22 @@ class DepartmentController extends Controller
             return redirect()->back()->with('error','access denied');
         }
         if ($request->hasFile('bank_logo')){
-             $image = $request->file('bank_logo');
+            $image = $request->file('bank_logo');
             $ImageNameBank = rand().'_'.time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/uploads');
-            $image->move($destinationPath, $ImageNameBank);
-             $department->bank_logo = $ImageNameBank;
+            $image->move(public_path('/uploads'), $ImageNameBank);
+            $department->bank_logo = $ImageNameBank;
+        } else if ($request->input('remove_bank_logo') == 1) {
+            $department->bank_logo = null;
         }
         if ($request->hasFile('school_logo')){
              $image = $request->file('school_logo');
             $ImageNameSchool = rand().'_'.time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/uploads');
-            $image->move($destinationPath, $ImageNameSchool);
+            $image->move(public_path('/uploads'), $ImageNameSchool);
             $department->school_logo = $ImageNameSchool;
+        } else if ($request->input('remove_school_logo') == 1) {
+            $department->school_logo = null;
         }
-
+ 
         $department->department_name = $request->input('department_name');
         $department->bank_name = $request->input('bank_name');
         $department->bank_account = $request->input('bank_account');

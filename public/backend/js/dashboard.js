@@ -3,7 +3,9 @@ dashboard = {
 
     admin_init: function(){
   
-		var income_vs_expense = echarts.init(document.getElementById('income_vs_expense_chart'));
+		var el = document.getElementById('income_vs_expense_chart');
+		if(!el) return; // Chart container missing on this page
+		var income_vs_expense = echarts.init(el);
 
 		option = {
 			xAxis: {
@@ -45,7 +47,9 @@ dashboard = {
 	
 	accountant_init: function(){
   
-		var income_vs_expense = echarts.init(document.getElementById('income_vs_expense_chart'));
+		var el = document.getElementById('income_vs_expense_chart');
+		if(!el) return; // Chart container missing on this page
+		var income_vs_expense = echarts.init(el);
 
 		option = {
 			xAxis: {

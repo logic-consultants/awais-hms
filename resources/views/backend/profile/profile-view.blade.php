@@ -36,7 +36,6 @@
 								</ul>
 							</td>
 						</tr>
-						
 					</tbody>
 				</table>
 			</div>

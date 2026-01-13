@@ -24,14 +24,14 @@
 
         <div class="col-md-2">
             <div class="form-group" style="margin-top: 30px;">
-            <label for="pageSize">paginate:</label>
+                <label for="pageSize">paginate:</label>
                 <select id="pageSize">
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="50">100</option>
-                <option value="50">500</option>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="50">100</option>
+                    <option value="50">500</option>
                 </select>
             </div>
         </div>
@@ -60,7 +60,7 @@
 			  </div>
 			  <br />
 			 @endif -->
-            
+
 
                 <table id="tblRecords" class="table table-bordered">
                     <thead>
@@ -77,9 +77,14 @@
                     <tbody>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colspan="4" style="text-align:right"><strong>Total Amount:</strong></td>
+                        <tr style="border-top:2px solid #ccc;">
+                            <td colspan="4"style="text-align:right"><strong>Total Amount:</strong></td>
                             <td id="totalAmount"><strong>0.00</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr class="bg-info" style="color: #fff;">
+                            <td colspan="4" style="text-align:right"><strong>{{ _lang('Grand Total') }}:</strong></td>
+                            <td id="grandTotal"><strong>0.00</strong></td>
                             <td></td>
                         </tr>
                     </tfoot>
@@ -98,186 +103,114 @@
 <script>
     function getAllRecordsForTable() {
         $("#preloader").css("display", "block");
-        var url = "{{url('/transactions/income')}}";
+        
+        var url = "{{ url('/transactions/income') }}";
         url += "?date_from=" + $('#date_from').val() + "&date_to=" + $('#date_to').val();
         var selectedPageSize = parseInt($('#pageSize').val());
-        $('#tblRecords').DataTable().destroy();
+
+        // Destroy existing table if it exists
+        if ($.fn.DataTable.isDataTable('#tblRecords')) {
+            $('#tblRecords').DataTable().destroy();
+        }
+        
         $.fn.dataTable.ext.errMode = 'none';
 
         var table = $("#tblRecords").DataTable({
             "processing": true,
-            "serverSide":true,
+            "serverSide": true,
             "filter": true,
             "orderMulti": false,
             "pageLength": selectedPageSize,
-            "responsive": true, // Enable responsive feature
-            "autoWidth": false, // Prevent fixed column width issues
-            "initComplete": function (settings, json) {
+            "responsive": true,
+            "autoWidth": false,
+            "initComplete": function(settings, json) {
                 $("#preloader").css("display", "none");
             },
             "ajax": {
                 "url": url,
                 "type": "GET",
-                "datatype": "json",
-                "dataSrc": function (json) {
-                    let totalAmount = json.data.reduce((sum, record) => sum + parseFloat(record.amount || 0), 0);
-                    $("#totalAmount").html('<strong>' + totalAmount.toFixed(2) + '<strong>'); // Ensure correct display
-                    return json.data;
-                }
+                "dataType": "json"
             },
             "columns": [
-                { "data": "trans_date", class: '', width: '7%' },
-                { "data": "f_type", class: '', width: '10%' },
-                { "data": "account_name", class: '', width: '10%' },
+                { "data": "trans_date", "width": "7%" },
+                { "data": "f_type", "width": "10%" },
+                { "data": "account_name", "width": "10%" },
                 {
                     "data": null,
-                    class: '',
-                    width: '43%',
-                    "render": function (data, type, full, meta) {
+                    "width": "43%",
+                    "render": function(data, type, full, meta) {
                         return full.first_name + ' (' + full.section_name + ')';
                     }
                 },
-                { "data": "amount", class: '', width: '10%' },
+                { "data": "amount", "width": "10%" },
                 {
                     "data": null,
-                    class: '',
-                    width: '20%',
-                    "render": function (data, type, full, meta) {
-                        id = full["id"];
-                        var url = "{{ url('transactions') }}";
-
-                        var formRoute = url + "/" + id;
-                        var showRoute = url + "/" + id;
-                        var editRoute = url + "/" + id + "/edit";
-
-                        var form = '<form action="' + formRoute + '" method="post">';
-                        form += '<a href="' + editRoute + '" data-title="Update Income" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
-                        form += '<a href="' + showRoute + '" data-title="View Income" class="btn btn-info btn-xs ajax-modal" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>';
-                        form += '{{ method_field('DELETE') }}';
-                        form += '@csrf';
-                        form += '<button type="submit" class="btn btn-danger btn-xs btn-remove" title="Delete Record"><i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title=Delete"></i></button>';
-                        form += '</form>';
-
-                        return form;
-                    },
+                    "width": "20%",
                     "orderable": false,
-                    "searchable": false
-                },
+                    "searchable": false,
+                    "render": function(data, type, full, meta) {
+                        var id = full["id"];
+                        var base_url = "{{ url('transactions') }}";
+                        
+                        var form = '<form action="' + base_url + '/' + id + '" method="post" style="display:inline-block;">';
+                        form += '<a href="' + base_url + '/' + id + '/edit" class="btn btn-warning btn-xs" title="Edit"><i class="fa fa-pencil"></i></a> ';
+                        form += '<a href="' + base_url + '/' + id + '" class="btn btn-info btn-xs ajax-modal" title="View"><i class="fa fa-eye"></i></a> ';
+                        form += '{{ method_field("DELETE") }}';
+                        form += '@csrf';
+                        form += '<button type="submit" class="btn btn-danger btn-xs btn-remove" title="Delete"><i class="fa fa-trash"></i></button>';
+                        form += '</form>';
+                        return form;
+                    }
+                }
             ],
             "order": [[0, "asc"]],
             "dom": '<"top"lf>rt<"bottom"Bip><"clear">',
-            "buttons": [
-                {
-                    extend: 'copy',
-                    exportOptions: { columns: [0, 1, 2, 3, 4, 5] },
-                    text: '<i class="fa fa-clone"></i> Copy'
-                },
-                {
-                    extend: 'excel',
-                    exportOptions: { columns: [0, 1, 2, 3, 4] },
-                    text: '<i class="fa fa-file-excel-o"></i> Excel'
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: { columns: [0, 1, 2, 3, 4] },
-                    text: '<i class="fa fa-file"></i> CSV'
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: { columns: [0, 1, 2, 3, 4] },
-                    text: '<i class="fa fa-file-pdf-o"></i> PDF'
-                  
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    },
-                    text: '<i class="fa fa-print"></i> Print',
-                    title: '',
+            "buttons": ['copy', 'excel', 'csv', 'pdf', 'print'],
 
-                    customize: function (win) {
-                        var now = new Date();
-                        var formattedDate = now.toLocaleDateString();
-                        var formattedTime = now.toLocaleTimeString();
-                        var printedBy = "{{ Auth::user()->name }}";
-
-                        var panelTitle = $('.panel-title').text().trim();    // Get date range values
-                        var dateFrom = $('#date_from').val();
-                        var dateTo = $('#date_to').val();
-
-                        var dateRangeText = '';
-                        if (dateFrom && dateTo) {
-                            dateRangeText = `(${dateFrom} to ${dateTo})`;
-                        } else if (dateFrom) {
-                            dateRangeText = `(From ${dateFrom})`;
-                        } else if (dateTo) {
-                            dateRangeText = `(Up to ${dateTo})`;
-                        }
-
-                        var logoUrl = "{{ asset(get_logo() ?? 'images/default-logo.png') }}"; // Fallback to default logo
-
-                        $(win.document.body).prepend(`
-                    <div style="margin-bottom: 20px; border-bottom: 1px solid #000; padding-bottom: 10px;">
-                     <div style="text-align: right; margin-top: 5px;">
-                <p>Powerd by: https://logic-consultants.com</p>
-            </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="flex: 1;">
-                                <img src="${logoUrl}" 
-                                    style="height: 50px;" alt="Logo">
-                            </div>
-                            <div style="flex: 2; text-align: center;">
-                                <h2 style="margin: 0; font-size: 22px; font-weight: bold;">{{get_school_name()}}</h2>
-                                <p style="margin: 2px 0;">{{ get_option('address')}}</p>
-                            </div>
-                            <div style="flex: 1;"></div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                            <div style="font-size: 14px;">${panelTitle}</div>
-                            <div style="font-size: 14px;">${dateRangeText}</div>
-                        </div>
-                    </div>
-                    `);
-                        }
-
-
-                },
-                'colvis'
-            ],
-            "drawCallback": function (settings) {
+            "footerCallback": function(row, data, start, end, display) {
                 var api = this.api();
-                var total = api.column(5, { page: 'all' }).data().reduce((a, b) => {
-                    return parseFloat(a) + parseFloat((b.amount || 0));
-                }, 0);
 
-                $("#totalAmount").html('<strong>' + total.toFixed(2) + '<strong>'); // Update total amount on redraw
+                var json = api.ajax.json();
+                var grandTotal = (json && json.grand_total) ? parseFloat(json.grand_total) : 0;
+
+                // 2. Calculate Page Total (JS sum of visible rows)
+                var pageTotal = api
+                    .column(4, { page: 'current' })
+                    .data()
+                    .reduce(function(a, b) {
+                        var val = typeof b === 'string' ? b.replace(/,/g, '') : b;
+                        return parseFloat(a) + parseFloat(val || 0);
+                    }, 0);
+
+                // 3. Update the specific Footer Cell by ID
+                $("#totalAmount").html(
+                    '<div style="font-size: 14px; color: #666; white-space:nowrap;">This Page: ' + pageTotal.toFixed(1) + '</div>'
+                    // '<div style="font-size: 16px; font-weight: bold; border-top:1px solid #ccc; white-space:nowrap;">Total: ' + grandTotal.toFixed(1) + '</div>'
+                );
+                $("#grandTotal").html('<strong>' + grandTotal.toFixed(2) + '</strong>');
             }
-
         });
     }
+
+    // Handle Page Size Change
     $('#pageSize').on('change', function() {
- 
-  getAllRecordsForTable(); // Reload DataTable with new page size
-});
+        getAllRecordsForTable();
+    });
 
-
-
-    $(document).ready(function () {
-        $('#tblRecords').DataTable({
-            "responsive": true,
-            "autoWidth": false
-        });
-        //Date settings
+    // Initialize on Page Load
+    $(document).ready(function() {
+        // Set Default Dates
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
         var date_from = now.getFullYear() + "-" + (month) + "-" + ("01");
         var date_to = now.getFullYear() + "-" + (month) + "-" + (day);
+        
         $('#date_from').val(date_from);
         $('#date_to').val(date_to);
 
+        // Load Table Immediately
+        getAllRecordsForTable();
     });
-
 </script>
 @stop

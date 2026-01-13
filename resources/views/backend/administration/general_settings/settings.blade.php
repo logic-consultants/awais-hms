@@ -458,12 +458,16 @@ $(document).on("change","#mail_type",function(){
 
 $(document).ready(function(){
 
-	$("#systemSettingsRow").hide();
+	//user prompt to enter master password
 	var input = prompt("Please enter master password.", "");
-	if (input == "logicAppAdminPassword3256") {
+
+	// get password from .env file
+	var checkPass = "{{ env('MASTER_PASSWORD') }}";
+
+
+	if (input == checkPass) {
 		$("#systemSettingsRow").show();
 	}
-	
 });
 
 </script>

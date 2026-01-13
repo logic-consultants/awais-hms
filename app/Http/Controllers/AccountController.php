@@ -266,13 +266,12 @@ class AccountController extends Controller
         return redirect()->back()->with('success', _lang('Information has been added sucessfully'));
 
     }
-    public function edit_account_detail(Request $request, $id){
-        
-        $accounts = Accounts_detail::find($id);
-        $master_account_level = Accounts::distinct()->pluck('account_type');
-        // dd($accounts);
-        return view('backend.accounting.accounts_details.account_details_edit', compact('accounts', 'master_account_level'));
-    }
+        public function edit_account_detail(Request $request, $id){
+            $accounts = Accounts_detail::find($id);
+            // Get the full objects so we have access to both ID and Name
+            $master_account_level = Accounts::all(); 
+            return view('backend.accounting.accounts_details.account_details_edit', compact('accounts', 'master_account_level'));
+        }
 
     public function update_account_detail(Request $request, $id){
         

@@ -27,16 +27,15 @@
                             <div class="form-group">
                                 <label class="control-label">{{ _lang('Please select Type') }}</label>
                                 <select class="form-control" name="account_type" required>
-                                    <option value=""> {{ _lang('Please Select Type') }}</option>
+                                    <option value="">{{ _lang('Please Select Type') }}</option>
                                     @foreach ($master_account_level as $level)
-                                        <option value="{{ $level }}" {{ old('account_type', $accounts->account_type ?? '') == $level ? 'selected' : '' }}>
-                                            {{ _lang(ucfirst($level)) }}
+                                        <option value="{{ $level->id }}" 
+                                            {{ old('account_type', $accounts->account_type) == $level->id ? 'selected' : '' }}>
+                                            {{ $level->account_type }}
                                         </option>
                                     @endforeach
-                                    
                                 </select>
                             </div>
-
                         </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -44,10 +43,8 @@
                             <button type="submit" class="btn btn-primary">{{ _lang('Save') }}</button>
                         </div>
                     </div>
-
                 </form>
-                </div>
-           
+              </div>
         </div>
     </div>
     <div class="col-md-4"></div>

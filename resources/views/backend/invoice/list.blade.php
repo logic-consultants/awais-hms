@@ -60,23 +60,23 @@
 				<br />
 				@endif
 				
-<a class="btn btn-primary btn-sm pull-left" style="margin-top:10px;margin-bottom:10px;" data-title="{{ _lang('Add New Invoice') }}" href="{{route('invoices.create')}}">{{ _lang('Add New Invoice') }}</a>
-<table id="tblRecords" class="table table-bordered">
-	<thead>
-		<tr>
-			<th>{{ _lang('ID') }}</th>
-			<th>{{ _lang('Student') }}</th>
-			<th>{{ _lang('Floor') }} / {{ _lang('Room') }}</th>
-			<th>{{ _lang('Due Date') }}</th>
-			<th>{{ _lang('Title') }}</th>
-			<th>{{ _lang('Total') }}</th>
-			<th>{{ _lang('Paid') }}</th>
-			<th>{{ _lang('Due') }}</th>
-			<th>{{ _lang('Status') }}</th>
-			<th>{{ _lang('Action') }}</th>
-		</tr>
-	</thead>
-</table>
+				<a class="btn btn-primary btn-sm pull-left" style="margin-top:10px;margin-bottom:10px;" data-title="{{ _lang('Add New Invoice') }}" href="{{route('invoices.create')}}">{{ _lang('Add New Invoice') }}</a>
+				<table id="tblRecords" class="table table-bordered">
+					<thead>
+						<tr>
+							<th>{{ _lang('ID') }}</th>
+							<th>{{ _lang('Student') }}</th>
+							<th>{{ _lang('Floor') }} / {{ _lang('Room') }}</th>
+							<th>{{ _lang('Due Date') }}</th>
+							<th>{{ _lang('Title') }}</th>
+							<th>{{ _lang('Total') }}</th>
+							<th>{{ _lang('Paid') }}</th>
+							<th>{{ _lang('Due') }}</th>
+							<th>{{ _lang('Status') }}</th>
+							<th>{{ _lang('Action') }}</th>
+						</tr>
+					</thead>
+				</table>
 
 			</div>
 		</div>

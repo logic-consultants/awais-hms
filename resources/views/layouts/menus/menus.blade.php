@@ -622,6 +622,11 @@
 	   </li>
 	   @endif
 	   @if (has_permission('reports.student_attendance_report',Auth::User()->role_id))
+	   <li @if(Request::is('reports/student_report') || Request::is('reports/student_report/view')) class="active" @endif>
+			<a href="{{ url('reports/student_report') }}">
+				{{ _lang('Student List') }}
+			</a>
+	   </li>
 	   <li @if(Request::is('reports/student_attendance_report') || Request::is('reports/student_attendance_report/view')) class="active" @endif>
 			<a href="{{ url('reports/student_attendance_report') }}">
 				{{ _lang('Student Attendance') }}

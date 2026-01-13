@@ -118,6 +118,11 @@
 					{{ _lang('Student Attendance') }}
 				</a>
 			</li>
+			<li @if((Request::is('student'))OR(Request::is('student/*'))) class="active" @endif>
+				<a href="{{url('student/attendance')}}">
+					{{ _lang('Student List') }}
+				</a>
+			</li>
 			<li @if((Request::is('staff'))OR(Request::is('staff/*'))) class="active" @endif>
 				<a href="{{url('staff/attendance')}}">
 					{{ _lang('Staff Attendance') }}

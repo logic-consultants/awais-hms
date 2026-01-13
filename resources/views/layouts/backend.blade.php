@@ -45,6 +45,27 @@
 	</script>
 	
 	@include('layouts.css.dynamic_css')
+
+	 
+	<style>
+    @media print {
+        /* Ensure the logo column is visible */
+        .group_name img {
+            display: block !important;
+            width: 100px !important;
+            height: auto !important;
+            visibility: visible !important;
+        }
+        
+        /* Optional: Hide the Action column during print */
+        table th:last-child, 
+        table td:last-child {
+            display: none !important;
+        }
+    }
+</style>
+	<!-- CSS -->
+	@yield('css-script')
 </head>
 <body>
     <!-- Main Modal -->
@@ -176,7 +197,15 @@
   </div>
 </body>
 <!--   Core JS Files   -->
-<script type="text/javascript" src="{{ asset('backend/js/jquery.min.js') }}"></script>
+<!-- Load jQuery from CDN first, fallback to local copy if CDN fails -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+if (!window.jQuery) {
+    var s = document.createElement('script');
+    s.src = "{{ asset('backend/js/jquery.min.js') }}";
+    document.head.appendChild(s);
+}
+</script>
 
 <script type="text/javascript" src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
 
@@ -241,7 +270,7 @@ $(document).ready(function(){
 		   "info":           "{{ _lang('Showing') }} _START_ {{ _lang('to') }} _END_ {{ _lang('of') }} _TOTAL_ {{ _lang('Entries') }}",
 		   "infoEmpty":      "{{ _lang('Showing 0 To 0 Of 0 Entries') }}",
 		   "infoFiltered":   "(filtered from _MAX_ total entries)",
-		   "infoPostFix":    "",
+		//    "infoPostFix":    "",
 		   "thousands":      ",",
 		   "lengthMenu":     "{{ _lang('Show') }} _MENU_ {{ _lang('Entries') }}",
 		   "loadingRecords": "{{ _lang('Loading...') }}",
@@ -259,9 +288,19 @@ $(document).ready(function(){
 			  "sortDescending": ": activate to sort column descending"
 		  }
 	  },
-	  dom: 'lfBrtip',
+	  dom: '<"row"<"col-md-4"l><"col-md-4 text-center"B><"col-md-4"f>>rtip',
 	  buttons: [
-	  'copy', 'csv', 'excel', 'pdf', 'print'
+	  'copy', 'csv', 'excel', 'pdf', {
+		  extend: 'print',
+		  title: '{{ get_option("school_name") }}',
+		  exportOptions: {
+			  stripHtml: false
+		  },
+		  customize: function ( win ) {
+			  $(win.document.body).find('table img').css("width","100px");
+			  $(win.document.body).find('h1').css('text-align','center');
+		  }
+	  }
 	  ],
     });
 
@@ -280,19 +319,22 @@ $(document).ready(function(){
 	
 	<?php $i =0; ?>
 
-	@foreach ($errors->all() as $error)
-        Command: toastr["error"]("{{ $error }}");
-		
-		var name= "{{$errors->keys()[$i] }}";
-		
-		$("input[name='"+name+"']").addClass('error');
-		$("select[name='"+name+"'] + span").addClass('error');
-		
-		$("input[name='"+name+"'], select[name='"+name+"']").parent().append("<span class='v-error'>{{$error}}</span>");
-		
-		<?php $i++; ?>
-	
-	@endforeach
+	@if ($errors->any())
+        @foreach ($errors->getMessages() as $key => $messages)
+            @foreach ($messages as $error)
+                Command: toastr["error"]("{{ $error }}");
+                
+                var name = "{{ $key }}";
+                $("input[name='"+name+"']").addClass('error');
+                $("select[name='"+name+"'] + span").addClass('error');
+                
+                // Only append if it doesn't already exist to avoid duplicates
+                if($("input[name='"+name+"']").parent().find('.v-error').length == 0){
+                    $("input[name='"+name+"'], select[name='"+name+"']").parent().append("<span class='v-error'>{{$error}}</span>");
+                }
+            @endforeach
+        @endforeach
+    @endif
 
 });
 

@@ -36,6 +36,8 @@ class ProfileController extends Controller
             'image' => 'nullable|image|max:5120',
         ]);
 
+        
+
         $profile = User::find(Auth::User()->id);
         $profile->name = $request->name;
         $profile->email = $request->email;
@@ -43,6 +45,15 @@ class ProfileController extends Controller
 	    $profile->twitter = $request->twitter=="" ? "#" : $request->twitter;
 	    $profile->linkedin = $request->linkedin=="" ? "#" : $request->linkedin;
 	    $profile->google_plus = $request->google_plus=="" ? "#" : $request->google_plus;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_name ="profile_".time().".".$image->getClientOriginalExtension();
+            $image->move(public_path('uploads/images'), $file_name);
+
+            $profile->image = $file_name;
+        }
+
         $profile->save();
 
         return redirect('profile/my_profile')->with('success', _lang('Information has been updated'));

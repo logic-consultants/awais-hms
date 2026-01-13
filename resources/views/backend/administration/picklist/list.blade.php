@@ -7,7 +7,7 @@
 		<div class="panel panel-default no-export">
 			<div class="panel-heading"><span class="panel-title">{{ _lang('Picklist') }}</span>
 			<select id="type" class="select_class pull-right" onchange="show(this);">
-			   <option value="">{{ _lang('-- Select Type --') }}</option>
+			   <option value="all" >{{ _lang('-- All Types --') }}</option>
 			   <option>Religion</option>
 			   <option>Designation</option>
 			</select>
@@ -58,13 +58,19 @@
 @endsection
 @section('js-script')
 <script>
-$("#type").val("{{ $type }}");
-function show(elem){
-	if($(elem).val() == ""){
-		return;
+	$(document).ready(function() {
+		var currentType = "{{ $type ?? 'all' }}";
+		$("#type").val(currentType);
+	});
+
+	function show(elem){
+		var value = $(elem).val();
+		if(value == "all"){
+			window.location = "{{ url('picklists') }}";
+		}else{
+			window.location = "{{ url('picklists/type') }}/"+value;
+		}
 	}
-	window.location = "<?php echo url('picklists/type') ?>/"+$(elem).val();
-}
 </script>
 @stop
 

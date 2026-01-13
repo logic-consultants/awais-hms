@@ -50,7 +50,7 @@
 	
 		
 		<input type="hidden" name="trans_type" value="expense">
-		<input type="hidden" name="dr_cr" value="dr">
+		<input type="hidden" name="dr_cr" value="cr">
 
 		<!--<div class="col-md-6">-->
 		<!--  <div class="form-group">-->

@@ -2843,9 +2843,9 @@ textarea.form-control {
 	margin-top: 10px;
 }
 
-#DataTables_Table_0_filter {
+/* #DataTables_Table_0_filter {
     margin-top: -41px;
-}
+} */
 
 #DataTables_Table_0_filter input {
     font-size: 14px;

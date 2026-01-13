@@ -21,13 +21,15 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{ _lang('New Password') }}</label>
 							<div class="col-sm-9">
-								<input type="password" class="form-control" name="password" required>
+								<input type="password" minlength="6" class="form-control" name="password" required>
+								<!-- min length 6 alert -->
+								<span class="help-block" style="font-size: 10px;">{{ _lang('Password must be at least 6 characters long.') }}</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{ _lang('Confirm Password') }}</label>
 							<div class="col-sm-9">
-								<input type="password" class="form-control" id="password-confirm" name="password_confirmation" required>
+								<input type="password" minlength="6" class="form-control" id="password-confirm" name="password_confirmation" required>
 							</div>
 						</div>
 						<div class="form-group">

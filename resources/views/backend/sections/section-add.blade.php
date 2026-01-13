@@ -21,9 +21,9 @@
 					<div class="form-group">
 					   <div class="col-sm-12">
 						    <label class="control-label">Floor</label>
-							<select name="class_id" class="form-control select2" required>
-								<option value="">Select One</option>
-								{{ create_option('classes','id','class_name',old('class_id')) }}
+							<select name="class_id" class="form-control select2" >
+								<option value="all">{{ _lang('All Class') }}</option>
+								{{ create_option('classes','id','class_name',$class) }}
 							</select>
 						</div>
 					</div>
@@ -108,7 +108,8 @@
 @section('js-script')
 <script>
 function showClass(elem){
-	if($(elem).val() == ""){
+	if($(elem).val() == "" || $(elem).val() == "all"){
+		window.location = "<?php echo url('sections') ?>";
 		return;
 	}
 	window.location = "<?php echo url('sections/class') ?>/"+$(elem).val();

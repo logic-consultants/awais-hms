@@ -49,33 +49,34 @@
     <div class="col-md-4"></div>
 </div>
 <div class="row"> 
-    <div class="panel panel-default">
-        <div class="panel-heading text-center"><b>{{ _lang('Displaying Account Types') }}</b></div>
-        <div class="panel-body">
-            <table class="table table-bordered data-table">
-                <thead>
-                <tr>
-                    <th>{{ _lang('Account Type') }}</th>
-                    <th>{{ _lang('Master Accounts') }}</th> 
-                    <th>{{ _lang('Action') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach($account_types as $account_type)
-                <tr>
-                    <td>{{ $account_type->account_type }}</td>
-                    <td>{{ $account_type->masterAccount ? $account_type->masterAccount->master_account : '' }}</td>
-                    <td> <a href="{{ route('edit_account_types.edit', $account_type->id) }}" class="btn btn-warning btn-sm">{{ _lang('Edit') }}</a>
-                    <form action="{{ route('delete_account_type.destroy', $account_type->id) }}" method="POST" style="display: inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ _lang('Are you sure?') }}')">{{ _lang('Delete') }}</button>
-                    </form></td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"><b>{{ _lang('Displaying Account Types') }}</b></div>
+            <div class="panel-body">
+                <table class="table table-bordered data-table">
+                    <thead>
+                    <tr>
+                        <th>{{ _lang('Account Type') }}</th>
+                        <th>{{ _lang('Master Accounts') }}</th> 
+                        <th>{{ _lang('Action') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($account_types as $account_type)
+                    <tr>
+                        <td>{{ $account_type->account_type }}</td>
+                        <td>{{ $account_type->masterAccount ? $account_type->masterAccount->master_account : '' }}</td>
+                        <td> <a href="{{ route('edit_account_types.edit', $account_type->id) }}" class="btn btn-warning btn-sm">{{ _lang('Edit') }}</a>
+                        <form action="{{ route('delete_account_type.destroy', $account_type->id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ _lang('Are you sure?') }}')">{{ _lang('Delete') }}</button>
+                        </form></td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
